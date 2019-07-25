@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+    <session-factory>
+   	
+   		<!-- 连接数据库的基本配置 -->
+   		<property name="connection.username">root</property>
+   		<property name="connection.password">123456</property>
+   		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+   		<property name="connection.url">jdbc:mysql:///hibernate5</property>
+   		
+   		<!-- 配置hibernate 的基本信息 -->
+   		<!-- hibernate 所使用的数据库方言 -->
+   		<property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+   		<!-- 执行操作时是否在控制台打印SQL -->
+   		<property name="show_sql">true</property>
+   		<!-- 是否对SQL进行格式化 -->
+   		<property name="format_sql">true</property>
+   		<!-- 指定自动生成数据表的策略 -->
+   		<!-- 
+   			Hibernate 配置文件的两个配置项
+   				.hbm2ddl.auto:该属性可以帮助程序员实现正向工程，即由java代码生成数据库脚本的，进而生成具体的表结构，
+   				取值create|update|create-drop|validate
+   					-create:会根据.hbm.xml文件来生成数据表，但是每次运行都会删除一次表，重新生成表，哪怕二次没有任何改变
+   					-create-drop:会根据.hbm.xml文件生成表，但是SessionFactory一关闭，表就自动删除
+   					-update:最常用的属性值，也会根据.hbm.xml文件生成表，但若.hbm.xml文件和数据库中对应的数据表结构不同，
+   					Hibernate 将更新数据表结构，但不会删除已有的行和列
+   					-validate:会和数据库中的表进行比较，若.hbm.xml文件中的列在数据表中不存在，则抛出异常
+   				.format_sql:是否将SQL转化为格式良好的SQL，取值true|false
+   		 -->
+   		<property name="hbm2ddl.auto">update</property>
+   		
+   		<!-- 指定关联的.hbm.xml文件 -->
+   		<mapping resource="com/kay/hibernate/helloworld/News.hbm.xml"/>
+   		
+    </session-factory>
+    
+</hibernate-configuration>
