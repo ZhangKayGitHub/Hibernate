@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2019-7-8 11:18:23 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+	<!--使用与update更新数据时盲目UPDATE select-before-update="true" 在下面class标签中使用 -->
+	
+    <class name="com.kay.hibernate.entities.News" table="NEWS" dynamic-update="true">
+	    <!-- 
+		id  saveOrUpdate
+		id :设定持久化类的OID和表的主键的映射- name:标识持久化类OID的属性名
+		-column: 设置标识属性所映射的数据表的列名(主键字段的名字)
+		- unsaved-value:若设定了 该属性Hibemate会通过比较持久化类的OID值和该属性值来区分当前持久化类的对象是否为临时对象
+		- type:指定 Hibemate映射类型Hibemate映射类型是Java类型与SQL类型的桥梁如果没有为某个属性显式设定映射类型，
+		Hibemate会运用反射机制先识别出持久化类的特定属性的Java类型然后自动使用与之对应的默认的Hibemate映射类型
+		- Java的基本数据类型和包装类型对应相同的 Hibermate映射类型.基本数据类型无法表达null,所以对于持久化类的OID推荐使用包装类型
+		 -->
+        <id name="id" type="java.lang.Integer" ><!-- unsaved-value="true" 会被认为是一个游离的对象 -->
+            <column name="ID" />
+            <!-- generator:设定持久化类设定标识符生成器 -class 指定使用的标识符生成器全限定类名或其缩写名 -->
+            <!-- 
+            identity标识符生成器
+            identity标识符生成器由底层数据库来负责生成标识符，它要求底层数据库把主键定义为自动增长字段类型
+                                  适用范围:
+            	-由于identity生成标识符的机制依赖于底层数据库系统，因此，要求底层数据库系统必须支持自动增长字段类型.
+            	支持自动增长字段类型的数据库包括: DB2, Mysql, MSSQL Server, Sybase等
+            	一OID必须为long, int或short类型，如果把OID定义为byte类型，在运行时会抛出异常
+             -->
+            <generator class="native" /><!-- 标识符生成器 assigned、identity、increament、sequence、hilo-->
+        </id>
+        <property name="title" type="java.lang.String" unique="true" update="false" index="news_index" length="20">
+            <column name="TITLE" />
+        </property>
+        <property name="author" type="java.lang.String" index="news_index">
+            <column name="AUTHOR" />
+        </property>
+        <!--
+        Java吋间和日期炎型的Hibernate映射
+		在Java中,代表时间和日期的美型包括:java.util.Date和java.utilCalendar,
+		此外,在JDBC API中还提供了3个扩展了java.util.Date 类的子类:java.sql.Date,
+		java.sql.Time和java sql.Timestamp,这三个类分別和标准SQL类型中的DATE,TIME和TIMESTAMP类型対应;
+		在便准SQL中, DATE美型表示日期, TIME奘型表示时间, TIMESTAMP类型表示吋间戳,同吋包含日期和是时间信息.
+         -->
+        <property name="date" type="timestamp"><!-- date、time、timestamp 是hibernate对java.util. 与 java.sql.的时间映射 -->
+            <column name="DATE" />
+        </property>
+        <!-- 映射派生属性 -->
+       	<property name="desc" formula="(SELECT concat(author,':',title) FROM NEWS n WHERE n.id=id)"></property>
+       	
+       	<!-- 映射大对象 -->
+       	<!-- 
+       	Java大对象类型的Hiberante映射
+       	在Java中，java.lang.String可用于表示长字符串(长度超过255),字节数组byte[]可用于存放图片或文件的二进制数据。此外，
+       	在JDBC API中还提供了java.sql.Clob 和java.sql.Blob类型，它们分别和标准SQL中的CLOB和BLOB类型对应CLOB表示字符串大对象(Character Large Object), 
+       	BLOB表示二进制对象(Binary Large Object)
+   
+       	Mysql不支持标准SQL 的 CLOB 类型，早Mysql中，用TEXT，MEDIUMTEXT 及LONGTEXT 类型来表示长度操作255的长文本数据
+       	在持久化类中，二进制大对象可以声明为 byte[] 或 java.sql.Blob 类型；字符串可以声明为java.lang.String 或 java.sql.Clob
+       	实际上在Java 应用程序中处理长度超过255的字符串，使用java.lang.String 比 Java.sql.Clod 更方便
+       	 -->
+       <!-- 这样指定的数据类型的映射不够精确<property name="content" type="clob"></property>
+       	<property name="image" type="blob"></property> 若希望精确映射SQL类型可以用sql-type属性-->	
+       	<property name="content">
+       		<column name="CONTENT" sql-type="mediumtext"></column>
+       	</property>
+       	<property name="image">
+       		<column name="IMAGE" sql-type="mediumblob"></column>
+       	</property>
+    </class>
+</hibernate-mapping>
+ 

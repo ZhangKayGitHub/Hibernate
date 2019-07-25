@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2019-7-8 22:05:17 by Hibernate Tools 3.5.0.Final -->
+<!-- 
+	hibernate-mapping
+	-类层次:class
+		.主键:id
+		.基本类型:preperty
+		.实体以用类型:many-to-one | one-to-one
+		.集合:set | list | map | array
+			-one-to-many
+			-many-to-many
+		.子类：subclass | joined-subclass
+		.其它:component | any
+	-查询语句:query(用来方式查询语句，百年与对数据库查询的统一管理和优化)
+	每个Hibernate-mapping中可以同时定义多个类，但更推荐为每个类都创建一个单独的映射文件
+	
+
+ -->
+<hibernate-mapping package="com.kay.hibernate.entities">
+    <class name="Worker" table="WORKER">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <!-- 映射组成关系 -->
+       <component name="pay" class="Pay">
+      		<parent name="worker"/><!-- 指明当前的pay属于谁(worker) -->
+       		<!-- 指定组成关系的组件的属性 -->
+       		<property name="monthlyPay" column="MONTHLY_PAY"></property>
+       		<property name="yearPay" column="YEAR_PAY"></property>
+       		<property name="vocationWithPay" column="VOCATION_WITH_PAY"></property>
+       </component>
+        <!--  
+        <many-to-one name="pay" class="com.kay.hibernate.entities.Pay" fetch="join">
+            <column name="PAY" />
+        </many-to-one>-->
+        
+    </class>
+</hibernate-mapping>
