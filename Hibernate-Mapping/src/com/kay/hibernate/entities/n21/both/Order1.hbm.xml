@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2019-7-9 10:26:51 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="com.kay.hibernate.entities.n21.both">
+    <class name="Order1" table="ORDER1">
+        <id name="order1Id" type="java.lang.Integer">
+            <column name="ORDER1_ID" />
+            <generator class="native" />
+        </id>
+        <property name="order1Name" type="java.lang.String">
+            <column name="ORDER1_NAME" />
+        </property>
+        <!--
+        	 映射多对一的关系映射 。使用many-to-one 来映射多对一的关联关系
+       		name: 多这一端的一那一端的属性的名字
+       		class: 一那一端的属性的类名
+       		column: 一那一端在多的一端对应的数据表中的外键的名字
+       	
+       	 -->
+        <many-to-one name="customer" class="Customer" column="CUSTOMER_ID"></many-to-one>
+    </class>
+</hibernate-mapping>

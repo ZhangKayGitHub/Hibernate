@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2019-7-9 10:26:51 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="com.kay.hibernate.strategy">
+    <class name="Order1" table="ORDER1">
+        <id name="order1Id" type="java.lang.Integer">
+            <column name="ORDER1_ID" />
+            <generator class="native" />
+        </id>
+        <property name="order1Name" type="java.lang.String">
+            <column name="ORDER1_NAME" />
+        </property>
+        <many-to-one name="customer" class="Customer" column="CUSTOMER_ID"></many-to-one>
+    </class>
+</hibernate-mapping>
